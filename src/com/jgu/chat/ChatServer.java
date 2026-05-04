@@ -54,6 +54,7 @@ public class ChatServer {
     private static final Color WHATSAPP_DARK = new Color(32, 44, 51);
     private static final Color HEADER_DARK = new Color(24, 28, 31);
     private static final Color CHAT_BACKGROUND = new Color(11, 20, 26);
+    private static final Color LOG_BACKGROUND = new Color(13, 24, 31);
     private static final Color INPUT_FIELD = new Color(42, 57, 66);
     private static final Color OTHER_BUBBLE = new Color(31, 36, 37);
     private static final Color SERVER_BUBBLE = new Color(28, 36, 41);
@@ -123,6 +124,7 @@ public class ChatServer {
 
         frame = new JFrame("Kelompok 5 - Server");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setPreferredSize(new Dimension(960, 710));
         frame.setMinimumSize(new Dimension(760, 560));
         frame.setLayout(new BorderLayout());
 
@@ -183,24 +185,24 @@ public class ChatServer {
 
         JPanel root = new JPanel(new GridBagLayout());
         root.setBackground(CHAT_BACKGROUND);
-        root.setBorder(BorderFactory.createEmptyBorder(18, 18, 18, 18));
+        root.setBorder(BorderFactory.createEmptyBorder(20, 22, 22, 22));
 
         clientsPanel = new JPanel();
         clientsPanel.setOpaque(false);
         clientsPanel.setLayout(new BoxLayout(clientsPanel, BoxLayout.Y_AXIS));
-        clientsPanel.setBorder(BorderFactory.createEmptyBorder(14, 14, 14, 14));
+        clientsPanel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
         JPanel clientsCard = createSection("Online Clients", clientsPanel);
-        clientsCard.setPreferredSize(new Dimension(220, 420));
+        clientsCard.setPreferredSize(new Dimension(250, 500));
 
         logPanel = new JPanel();
-        logPanel.setBackground(CHAT_BACKGROUND);
+        logPanel.setBackground(LOG_BACKGROUND);
         logPanel.setLayout(new BoxLayout(logPanel, BoxLayout.Y_AXIS));
-        logPanel.setBorder(BorderFactory.createEmptyBorder(12, 14, 12, 14));
+        logPanel.setBorder(BorderFactory.createEmptyBorder(14, 16, 14, 16));
 
         logScrollPane = new JScrollPane(logPanel);
         logScrollPane.setBorder(BorderFactory.createEmptyBorder());
-        logScrollPane.getViewport().setBackground(CHAT_BACKGROUND);
+        logScrollPane.getViewport().setBackground(LOG_BACKGROUND);
         logScrollPane.getVerticalScrollBar().setUnitIncrement(16);
         logScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         logScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(6, 0));
@@ -213,7 +215,7 @@ public class ChatServer {
         clientsConstraints.weightx = 0;
         clientsConstraints.weighty = 1.0;
         clientsConstraints.fill = GridBagConstraints.BOTH;
-        clientsConstraints.insets = new Insets(0, 0, 0, 14);
+        clientsConstraints.insets = new Insets(0, 0, 0, 18);
         root.add(clientsCard, clientsConstraints);
 
         GridBagConstraints logConstraints = new GridBagConstraints();
@@ -241,12 +243,12 @@ public class ChatServer {
     private JPanel createSection(String title, Component content) {
         JPanel section = new RoundedPanel(SERVER_BUBBLE, 16, true);
         section.setLayout(new BorderLayout());
-        section.setBorder(BorderFactory.createEmptyBorder(14, 14, 14, 14));
+        section.setBorder(BorderFactory.createEmptyBorder(16, 18, 18, 18));
 
         JLabel titleLabel = new JLabel(title);
         titleLabel.setForeground(TEXT_LIGHT);
         titleLabel.setFont(appFont(Font.BOLD, 15));
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 2, 12, 2));
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 14, 0));
 
         section.add(titleLabel, BorderLayout.NORTH);
         section.add(content, BorderLayout.CENTER);
@@ -394,9 +396,9 @@ public class ChatServer {
     private JPanel createClientRow(String username) {
         JPanel row = new JPanel(new BorderLayout(10, 0));
         row.setOpaque(false);
-        row.setBorder(BorderFactory.createEmptyBorder(7, 4, 7, 4));
+        row.setBorder(BorderFactory.createEmptyBorder(8, 2, 8, 2));
         row.setAlignmentX(Component.LEFT_ALIGNMENT);
-        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 48));
+        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 54));
 
         JLabel avatar = new CircleLabel(initials(username), senderColor(username), Color.WHITE);
         avatar.setFont(appFont(Font.BOLD, 11));
@@ -434,21 +436,22 @@ public class ChatServer {
                 JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
                 row.setOpaque(false);
                 row.setAlignmentX(Component.LEFT_ALIGNMENT);
-                row.setBorder(BorderFactory.createEmptyBorder(4, 0, 4, 0));
+                row.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
 
-                JLabel label = new JLabel("<html><body style='width: 420px; line-height: 1.25;'>"
+                JLabel label = new JLabel("<html><body style='width: 560px; line-height: 1.25;'>"
                         + html(message) + "</body></html>");
                 label.setFont(appFont(Font.PLAIN, 13));
                 label.setForeground(neutral ? TEXT_LIGHT : MUTED_TEXT);
-                label.setBorder(BorderFactory.createEmptyBorder(9, 13, 9, 13));
+                label.setBorder(BorderFactory.createEmptyBorder(10, 14, 10, 14));
 
                 RoundedPanel bubble = new RoundedPanel(neutral ? OTHER_BUBBLE : INPUT_FIELD, 16, false);
                 bubble.setLayout(new BorderLayout());
                 bubble.add(label, BorderLayout.CENTER);
+                bubble.setMaximumSize(new Dimension(Integer.MAX_VALUE, 46));
 
                 row.add(bubble);
+                row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 56));
                 logPanel.add(row);
-                logPanel.add(Box.createVerticalStrut(2));
                 logPanel.revalidate();
                 logPanel.repaint();
 

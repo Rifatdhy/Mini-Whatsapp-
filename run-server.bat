@@ -1,11 +1,13 @@
 @echo off
 setlocal
-set "JAVA=java"
-where java >nul 2>nul
+set "JAVA=javaw"
+where javaw >nul 2>nul
 if errorlevel 1 (
-    if exist "C:\Program Files\Apache NetBeans\jdk\bin\java.exe" (
-        set "JAVA=C:\Program Files\Apache NetBeans\jdk\bin\java.exe"
+    if exist "C:\Program Files\Apache NetBeans\jdk\bin\javaw.exe" (
+        set "JAVA=C:\Program Files\Apache NetBeans\jdk\bin\javaw.exe"
+    ) else (
+        set "JAVA=java"
     )
 )
 
-"%JAVA%" -cp out com.jgu.chat.ChatServer 5000
+start "" "%JAVA%" -cp out com.jgu.chat.ChatServer 5000
